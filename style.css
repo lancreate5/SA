@@ -17,7 +17,7 @@ body {
 		text-align: center;
 		color: #FFFFFF;
 	}
-	.wrapper .input {
+	.input {
 		border-radius: 20px;
 		text-align: center;
 		display: block;
@@ -34,4 +34,7 @@ body {
 		font-weight: bold;
 		color: white;
 	}
-
+	.result {
+		color: white;
+		text-align: center;
+	}

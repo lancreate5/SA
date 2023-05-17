@@ -1,6 +1,6 @@
 selectClass = (className) => document.getElementsByClassName(className);
-
 const userInput = document.querySelector("input");
+const timeDisplay = selectClass("time")[0];
 
 function validateInput() {
 	if(userInput.value == "") { return false; }
@@ -13,26 +13,60 @@ function validateInput() {
 	return true;
 }
 
-function bruteForce() {
-	console.log("BF!");
+function bruteForce(target) {
+	let res = 0,
+		adder;
+
+	let timeStart = Date.now();
+	for(adder = 0; res < target;) {
+		adder++;
+		res += adder;
+	}
+
+	timeDisplay.textContent = String(Date.now() - timeStart)/1000 + " detik";
+	return adder;
 }
 
-function divideAndConquer() {
-	console.log("DnC!");
+function divideAndConquer(target) {
+	let low = 1,
+		high = target;
+
+	let timeStart = Date.now();
+	while(low <= high) {
+		let mid = Math.trunc((low + high)/2);
+		let sumToN = Math.trunc(mid*(mid + 1)/2);
+		if(sumToN < target) {
+			low = mid + 1;
+		} else if(sumToN > target) {
+			high = mid - 1;
+		} else {
+			return mid;
+		}
+	}
+
+	timeDisplay.textContent = String(Date.now() - timeStart)/1000 + " detik";
+	return low;
 }
+
 function callFunction(code) {
 	if(validateInput()) {
-		if(code === "B") { bruteForce();
-		} else { divideAndConquer();
+		let target = Number(userInput.value);
+		let result;
+		if(code === "B") { result = bruteForce(target);
+		} else { result = divideAndConquer(target);
 		}
+		console.log(result);
 	}
 }
 
-const buttons = selectClass("choices")[0].children;
-for(let i = 0; i < buttons.length; i++) {
-	buttons[i].addEventListener(
-		"click", () => {
-			callFunction(buttons[i].textContent[0])
-		}
-	);
+function main() {
+	const buttons = selectClass("choices")[0].children;
+	for(let i = 0; i < buttons.length; i++) {
+		buttons[i].addEventListener( "click", () => {
+				callFunction(buttons[i].textContent[0]);
+			}
+		);
+	}
 }
+
+main();
