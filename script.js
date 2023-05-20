@@ -31,6 +31,7 @@ function bruteForce(target) {
 
 function recordDnC(low, high) {
 	let parent = document.createElement("section");
+	parent.className = "trace-item";
 	parent.style.display = "flex";
 
 	let item = document.createElement("p");
@@ -64,7 +65,7 @@ function divideAndConquer(target) {
 		} else {
 			return mid;
 		}
-		TRACES.appendChild(makeTraceDnC(low, high));
+		TRACES.appendChild(recordDnC(low, high));
 	}
 
 	timeDisplay.textContent = String(Date.now() - timeStart)/1000 + " detik";
@@ -88,20 +89,28 @@ function handleButtonPress(code) {
 }
 
 function main() {
+	const TRACE_SECT = document.createElement("section");
+	TRACE_SECT.className = "trace";
+	TRACE_SECT.style.display = "none";
+	let head = document.createElement("h2");
+	head.textContent = "Tracing";
+	TRACE_SECT.append(head);
+
+	TRACES.className = "traces";
+	TRACE_SECT.append(TRACES);
+	document.querySelector("body").append(TRACE_SECT);
+
 	const buttons = selectClass("choices")[0].children;
 	for(let i = 0; i < buttons.length; i++) {
 		buttons[i].addEventListener( "click", () => {
+				if(TRACE_SECT.style.display === "none") {
+					TRACE_SECT.style.display = "block";
+				}
+
 				handleButtonPress(buttons[i].textContent[0]);
 			}
 		);
 	}
-
-	let head = document.createElement("h2");
-	head.textContent = "Tracing";
-	document.querySelector("body").append(head);
-
-	TRACES.className = "traces";
-	document.querySelector("body").append(TRACES);
 }
 
 main();

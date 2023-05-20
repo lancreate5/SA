@@ -5,11 +5,17 @@ body {
 h2 {
 	text-decoration: underline;
 }
+
+.trace,
 .wrapper {
-	margin: 50px auto;
 	background-color: #343434;
-	border-radius: 20px;
+	color: white;
 	padding: 20px;
+	margin: 50px auto;
+	border-radius: 20px;
+}
+
+.wrapper {
 	width: fit-content;
 }
 	.wrapper * {
@@ -62,3 +68,8 @@ h2 {
 		.break {
 			border: 1px solid white;
 		}
+.trace {
+	text-align: center;
+}
+	.trace-item {
+	}
