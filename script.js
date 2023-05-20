@@ -2,7 +2,8 @@ selectClass = (className) => document.getElementsByClassName(className);
 
 const userInput = document.querySelector("input");
 const timeDisplay = selectClass("time")[0];
-let TRACES = document.createElement("section"); 
+const TRACE_SECT = document.createElement("section");
+const TRACES = document.createElement("section"); 
 
 function validateInput() {
 	if(userInput.value == "") { return false; }
@@ -32,16 +33,13 @@ function bruteForce(target) {
 function recordDnC(low, high) {
 	let parent = document.createElement("section");
 	parent.className = "trace-item";
-	parent.style.display = "flex";
 
 	let item = document.createElement("p");
-	item.style.color = "#FFFFFF";
-	item.style.textAlign = "center";
-	item.style.border = "1px solid white";
-	item.style.flex = "1";
+	item.className = "trace-item-content";
 	for(let i = 0; i < 3; i++) {
 		parent.append(item.cloneNode(true));
 	}
+
 	parent.childNodes[0].textContent = `${low}`;
 	parent.childNodes[1].textContent = `${Math.trunc((low + high)/2)}`;
 	parent.childNodes[2].textContent = `${high}`;
@@ -89,7 +87,6 @@ function handleButtonPress(code) {
 }
 
 function main() {
-	const TRACE_SECT = document.createElement("section");
 	TRACE_SECT.className = "trace";
 	TRACE_SECT.style.display = "none";
 	let head = document.createElement("h2");

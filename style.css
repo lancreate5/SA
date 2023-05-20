@@ -70,6 +70,18 @@ h2 {
 		}
 .trace {
 	text-align: center;
+	margin: 10px 10%;
 }
 	.trace-item {
+		display: flex;
+		gap: 20px;
 	}
+		.trace-item-content {
+			width: fit-content;
+			padding: 10px;
+			color: white;
+			text-align: center;
+			border: 1px solid white;
+			border-radius: 10px;
+			flex: 1;
+		}
