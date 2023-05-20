@@ -1,6 +1,8 @@
 selectClass = (className) => document.getElementsByClassName(className);
+
 const userInput = document.querySelector("input");
 const timeDisplay = selectClass("time")[0];
+let TRACES = document.createElement("section"); 
 
 function validateInput() {
 	if(userInput.value == "") { return false; }
@@ -13,7 +15,6 @@ function validateInput() {
 	return true;
 }
 
-let TRACE_SECTION = document.createElement("section"); 
 function bruteForce(target) {
 	let res = 0,
 		adder;
@@ -24,11 +25,11 @@ function bruteForce(target) {
 		res += adder;
 	}
 
-	timeDisplay.textContent = String(Date.now() - timeStart)/1000 + " detik";
+	timeDisplay.textContent = ((Date.now() - timeStart)/1000) + " detik";
 	return adder;
 }
 
-function makeTraceDnC(low, high) {
+function recordDnC(low, high) {
 	let parent = document.createElement("section");
 	parent.style.display = "flex";
 
@@ -50,7 +51,7 @@ function divideAndConquer(target) {
 	let low = 1,
 		high = target;
 
-	TRACE_SECTION.appendChild(makeTraceDnC(low, high));
+	TRACES.appendChild(recordDnC(low, high));
 
 	let timeStart = Date.now();
 	while(low <= high) {
@@ -63,22 +64,19 @@ function divideAndConquer(target) {
 		} else {
 			return mid;
 		}
-		TRACE_SECTION.appendChild(makeTraceDnC(low, high));
+		TRACES.appendChild(makeTraceDnC(low, high));
 	}
 
 	timeDisplay.textContent = String(Date.now() - timeStart)/1000 + " detik";
 	return low;
 }
 
-function callFunction(code) {
-}
-
 function handleButtonPress(code) {
 	if(validateInput()) {
-		let secChildren = TRACE_SECTION.children;
+		let secChildren = TRACES.children;
 		console.log("LOG: Cleaning trace...");
-		for(let i = secChildren.length - 1; i >= 0 ; i--) {
-			secChildren[i].remove();
+		while(secChildren.length > 0) {
+			secChildren[0].remove();
 		}
 		
 		let result;
@@ -102,8 +100,8 @@ function main() {
 	head.textContent = "Tracing";
 	document.querySelector("body").append(head);
 
-	TRACE_SECTION.className = "trace";
-	document.querySelector("body").append(TRACE_SECTION);
+	TRACES.className = "traces";
+	document.querySelector("body").append(TRACES);
 }
 
 main();
