@@ -85,3 +85,7 @@ h2 {
 			border-radius: 10px;
 			flex: 1;
 		}
+
+.solution {
+	background-color: rgba(0, 128, 56, 0.5);
+}

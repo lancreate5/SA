@@ -16,14 +16,35 @@ function validateInput() {
 	return true;
 }
 
+function recordBF(current, adder, target) {
+	let parent = document.createElement("p");
+	parent.className = "trace-item";
+
+	let item = document.createElement("p");
+	item.className = "trace-item-content";
+	for(let i = 0; i < 2; i++) {
+		parent.append(item.cloneNode(true));
+	}
+
+	parent.childNodes[0].textContent = `${adder}`;
+	parent.childNodes[1].textContent = `${current}`;
+
+	if(current >= target) {
+		parent.className += " solution";
+	}
+	return parent;
+}
+
 function bruteForce(target) {
 	let res = 0,
-		adder;
+		adder = 0;
 
+	TRACES.appendChild(recordBF(res, adder, target));
 	let timeStart = Date.now();
-	for(adder = 0; res < target;) {
+	while(res < target) {
 		adder++;
 		res += adder;
+		TRACES.appendChild(recordBF(res, adder, target));
 	}
 
 	timeDisplay.textContent = ((Date.now() - timeStart)/1000) + " detik";
@@ -50,38 +71,49 @@ function divideAndConquer(target) {
 	let low = 1,
 		high = target;
 
-	TRACES.appendChild(recordDnC(low, high));
-
+	let solution = recordDnC(low, high);
 	let timeStart = Date.now();
 	while(low <= high) {
+		TRACES.appendChild(solution);
 		let mid = Math.trunc((low + high)/2);
 		let sumToN = Math.trunc(mid*(mid + 1)/2);
+
 		if(sumToN < target) {
 			low = mid + 1;
 		} else if(sumToN > target) {
 			high = mid - 1;
 		} else {
+			solution = recordDnC(low, high);
+			solution.childNodes[1].className += " solution";
+			TRACES.appendChild(solution);
+
+			timeDisplay.textContent = String(Date.now() - timeStart)/1000 + " detik";
 			return mid;
 		}
-		TRACES.appendChild(recordDnC(low, high));
+
+		solution = recordDnC(low, high)
 	}
 
 	timeDisplay.textContent = String(Date.now() - timeStart)/1000 + " detik";
+	solution.childNodes[0].className += " solution";
+	TRACES.appendChild(solution);
 	return low;
 }
 
 function handleButtonPress(code) {
 	if(validateInput()) {
 		let secChildren = TRACES.children;
-		console.log("LOG: Cleaning trace...");
 		while(secChildren.length > 0) {
 			secChildren[0].remove();
 		}
+		console.log("LOG: Trace cleaned");
 		
 		let result;
 		let target = Number(userInput.value);
-		if(code === "B") { result = bruteForce(target);
-		} else { result = divideAndConquer(target);
+		if(code === "B") { 
+			result = bruteForce(target);
+		} else { 
+			result = divideAndConquer(target);
 		}
 	}
 }
