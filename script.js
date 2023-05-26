@@ -38,7 +38,18 @@ function recordBF(current, adder, target) {
 function bruteForce(target) {
 	let res = 0,
 		adder = 0;
+	
+	let labels = document.createElement("section");
+	labels.className="trace-item";
+	let item = document.createElement("p");
+	item.className = "trace-label";
+	for(let i = 0; i < 2; i++) {
+		labels.append(item.cloneNode(true));
+	}
+	labels.childNodes[0].textContent = `N-th iteration`;
+	labels.childNodes[1].textContent = `Sum`;
 
+	TRACES.appendChild(labels);
 	TRACES.appendChild(recordBF(res, adder, target));
 	let timeStart = Date.now();
 	while(res < target) {
@@ -71,6 +82,18 @@ function divideAndConquer(target) {
 	let low = 1,
 		high = target;
 
+	let labels = document.createElement("section");
+	labels.className="trace-item";
+	let item = document.createElement("p");
+	item.className = "trace-label";
+	for(let i = 0; i < 3; i++) {
+		labels.append(item.cloneNode(true));
+	}
+	labels.childNodes[0].textContent = `Low`;
+	labels.childNodes[1].textContent = `Mid`;
+	labels.childNodes[2].textContent = `High`;
+
+	TRACES.appendChild(labels);
 	let solution = recordDnC(low, high);
 	let timeStart = Date.now();
 	while(low <= high) {

@@ -75,17 +75,26 @@ h2 {
 	.trace-item {
 		display: flex;
 		gap: 20px;
+		font-weight: bold;
 	}
+		.trace-label,
 		.trace-item-content {
 			width: fit-content;
 			padding: 10px;
 			color: white;
 			text-align: center;
+			flex: 1;
+		}
+		.trace-item-content {
 			border: 1px solid white;
 			border-radius: 10px;
-			flex: 1;
+		}
+		.trace-label {
+			margin-bottom: 0px;
+			margin-top: 0px;
 		}
 
 .solution {
 	background-color: rgba(0, 128, 56, 0.5);
 }
+
